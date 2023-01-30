@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="project7Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="comments" Relationship="Self.FK_comments_AspNetUsers" FromRole="AspNetUsers" ToRole="comments" />
+    <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_AspNetUsers" FromRole="AspNetUsers" ToRole="Reservations" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="buffet_menu_items">
+    <Key>
+      <PropertyRef Name="ids" />
+    </Key>
+    <Property Name="ids" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="buffet_menu_id" Type="Int32" />
+    <Property Name="menu_item_id" Type="Int32" />
+    <NavigationProperty Name="buffet_menus" Relationship="Self.FK_buffet_menu_items_buffet_menu" FromRole="buffet_menu_items" ToRole="buffet_menus" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_buffet_menu_items_Products" FromRole="buffet_menu_items" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="buffet_menus">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="meal" Type="Int32" />
+    <NavigationProperty Name="buffet_menu_items" Relationship="Self.FK_buffet_menu_items_buffet_menu" FromRole="buffet_menus" ToRole="buffet_menu_items" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_buffet_menu_Categorys" FromRole="buffet_menus" ToRole="Categorys" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="buffet_menus" Relationship="Self.FK_buffet_menu_Categorys" FromRole="Categorys" ToRole="buffet_menus" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categorys" FromRole="Categorys" ToRole="Products" />
+    <NavigationProperty Name="Times" Relationship="Self.FK_Times_Categorys" FromRole="Categorys" ToRole="Times" />
+  </EntityType>
+  <EntityType Name="comment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="comment1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="flag" Type="Int32" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_comments_AspNetUsers" FromRole="comments" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="Date">
+    <Key>
+      <PropertyRef Name="Id_date" />
+    </Key>
+    <Property Name="Id_date" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="data" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Dates" FromRole="Dates" ToRole="Reservations" />
+    <NavigationProperty Name="Times" Relationship="Self.FK_Times_Dates" FromRole="Dates" ToRole="Times" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Id_category" Type="Int32" />
+    <NavigationProperty Name="buffet_menu_items" Relationship="Self.FK_buffet_menu_items_Products" FromRole="Products" ToRole="buffet_menu_items" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categorys" FromRole="Products" ToRole="Categorys" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="fk_date" Type="Int32" />
+    <Property Name="flag_break" Type="Int32" />
+    <Property Name="fk_table" Type="Int32" />
+    <Property Name="counter" Type="Int32" />
+    <Property Name="fk_time" Type="Int32" />
+    <Property Name="flag_lunch" Type="Int32" />
+    <Property Name="flag_dinner" Type="Int32" />
+    <Property Name="datett" Type="DateTime" Precision="0" />
+    <Property Name="Fk_category" Type="Int32" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Reservations_AspNetUsers" FromRole="Reservations" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Date" Relationship="Self.FK_Reservations_Dates" FromRole="Reservations" ToRole="Dates" />
+    <NavigationProperty Name="Table" Relationship="Self.FK_Reservations_Tables" FromRole="Reservations" ToRole="Tables" />
+    <NavigationProperty Name="Time" Relationship="Self.FK_Reservations_Times" FromRole="Reservations" ToRole="Times" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="numberof_table" Type="Int32" />
+    <Property Name="capacity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="flag" Type="Int32" />
+    <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Tables" FromRole="Tables" ToRole="Reservations" />
+  </EntityType>
+  <EntityType Name="Time">
+    <Key>
+      <PropertyRef Name="Id_time" />
+    </Key>
+    <Property Name="Id_time" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="timeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fk_date" Type="Int32" />
+    <Property Name="fk_category" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Times_Categorys" FromRole="Times" ToRole="Categorys" />
+    <NavigationProperty Name="Date" Relationship="Self.FK_Times_Dates" FromRole="Times" ToRole="Dates" />
+    <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Times" FromRole="Times" ToRole="Reservations" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_comments_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="comments" Type="Self.comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="Reservations" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reservations">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_buffet_menu_items_buffet_menu">
+    <End Role="buffet_menus" Type="Self.buffet_menus" Multiplicity="0..1" />
+    <End Role="buffet_menu_items" Type="Self.buffet_menu_items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="buffet_menus">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="buffet_menu_items">
+        <PropertyRef Name="buffet_menu_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_buffet_menu_items_Products">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="buffet_menu_items" Type="Self.buffet_menu_items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="buffet_menu_items">
+        <PropertyRef Name="menu_item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_buffet_menu_Categorys">
+    <End Role="Categorys" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="buffet_menus" Type="Self.buffet_menus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorys">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="buffet_menus">
+        <PropertyRef Name="meal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Categorys">
+    <End Role="Categorys" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorys">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Id_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Times_Categorys">
+    <End Role="Categorys" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Times" Type="Self.Time" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorys">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Times">
+        <PropertyRef Name="fk_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_Dates">
+    <End Role="Dates" Type="Self.Date" Multiplicity="0..1" />
+    <End Role="Reservations" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dates">
+        <PropertyRef Name="Id_date" />
+      </Principal>
+      <Dependent Role="Reservations">
+        <PropertyRef Name="fk_date" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Times_Dates">
+    <End Role="Dates" Type="Self.Date" Multiplicity="0..1" />
+    <End Role="Times" Type="Self.Time" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dates">
+        <PropertyRef Name="Id_date" />
+      </Principal>
+      <Dependent Role="Times">
+        <PropertyRef Name="Fk_date" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_Tables">
+    <End Role="Tables" Type="Self.Table" Multiplicity="0..1" />
+    <End Role="Reservations" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tables">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Reservations">
+        <PropertyRef Name="fk_table" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservations_Times">
+    <End Role="Times" Type="Self.Time" Multiplicity="0..1" />
+    <End Role="Reservations" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Times">
+        <PropertyRef Name="Id_time" />
+      </Principal>
+      <Dependent Role="Reservations">
+        <PropertyRef Name="fk_time" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="project7Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="buffet_menu_items" EntityType="Self.buffet_menu_items" />
+    <EntitySet Name="buffet_menus" EntityType="Self.buffet_menus" />
+    <EntitySet Name="Categorys" EntityType="Self.Category" />
+    <EntitySet Name="comments" EntityType="Self.comment" />
+    <EntitySet Name="Dates" EntityType="Self.Date" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tables" EntityType="Self.Table" />
+    <EntitySet Name="Times" EntityType="Self.Time" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_comments_AspNetUsers" Association="Self.FK_comments_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="comments" EntitySet="comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_AspNetUsers" Association="Self.FK_Reservations_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Reservations" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_buffet_menu_items_buffet_menu" Association="Self.FK_buffet_menu_items_buffet_menu">
+      <End Role="buffet_menus" EntitySet="buffet_menus" />
+      <End Role="buffet_menu_items" EntitySet="buffet_menu_items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_buffet_menu_items_Products" Association="Self.FK_buffet_menu_items_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="buffet_menu_items" EntitySet="buffet_menu_items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_buffet_menu_Categorys" Association="Self.FK_buffet_menu_Categorys">
+      <End Role="Categorys" EntitySet="Categorys" />
+      <End Role="buffet_menus" EntitySet="buffet_menus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Categorys" Association="Self.FK_Products_Categorys">
+      <End Role="Categorys" EntitySet="Categorys" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Times_Categorys" Association="Self.FK_Times_Categorys">
+      <End Role="Categorys" EntitySet="Categorys" />
+      <End Role="Times" EntitySet="Times" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_Dates" Association="Self.FK_Reservations_Dates">
+      <End Role="Dates" EntitySet="Dates" />
+      <End Role="Reservations" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Times_Dates" Association="Self.FK_Times_Dates">
+      <End Role="Dates" EntitySet="Dates" />
+      <End Role="Times" EntitySet="Times" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_Tables" Association="Self.FK_Reservations_Tables">
+      <End Role="Tables" EntitySet="Tables" />
+      <End Role="Reservations" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservations_Times" Association="Self.FK_Reservations_Times">
+      <End Role="Times" EntitySet="Times" />
+      <End Role="Reservations" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
